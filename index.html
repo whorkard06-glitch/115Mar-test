@@ -11,33 +11,24 @@
             --y2k-pink: #ff00e6;
             --y2k-cyan: #00f3ff;
             --y2k-yellow: #f0ff00;
-            --y2k-silver: #c0c0c0;
             --y2k-dark: #1a1a2e;
         }
 
         body {
             background-color: var(--y2k-dark);
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(255, 0, 230, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(0, 243, 255, 0.2) 0%, transparent 50%),
-                url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            background-image: radial-gradient(circle at 20% 30%, rgba(255, 0, 230, 0.2) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 70%, rgba(0, 243, 255, 0.2) 0%, transparent 50%);
             font-family: 'Noto Sans TC', sans-serif;
             color: white;
             padding: 20px;
-            overflow-x: hidden;
         }
 
         .chrome-text {
             font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 2.5rem;
-            text-transform: uppercase;
             background: linear-gradient(180deg, #fff 0%, #aaa 45%, #444 50%, #888 55%, #fff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             filter: drop-shadow(2px 2px 0px var(--y2k-pink));
-            letter-spacing: 2px;
-            text-align: center;
         }
 
         .y2k-container {
@@ -45,7 +36,6 @@
             backdrop-filter: blur(10px);
             border: 3px solid var(--y2k-cyan);
             border-radius: 40px;
-            box-shadow: 0 0 20px var(--y2k-cyan), inset 0 0 15px rgba(0, 243, 255, 0.3);
             max-width: 800px;
             margin: 40px auto;
             padding: 40px;
@@ -59,253 +49,230 @@
             padding: 12px 30px;
             color: white;
             font-weight: bold;
-            text-transform: uppercase;
-            box-shadow: 0 5px 0px #600050, 0 10px 20px rgba(255, 0, 230, 0.4);
             transition: all 0.2s;
             cursor: pointer;
-            display: inline-block;
+            box-shadow: 0 0 15px var(--y2k-pink);
+        }
+
+        .pill-button:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px var(--y2k-pink);
         }
 
         .pill-button:disabled {
-            background: #666;
-            box-shadow: none;
+            background: #444;
             cursor: not-allowed;
-            opacity: 0.7;
+            opacity: 0.5;
+            box-shadow: none;
         }
 
-        input[type="text"], input[type="email"], select, textarea {
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            color: var(--y2k-cyan);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        input, select, textarea {
             background: rgba(0, 0, 0, 0.5);
             border: 2px solid var(--y2k-cyan);
-            border-radius: 15px;
-            padding: 10px 15px;
-            color: var(--y2k-cyan);
+            border-radius: 12px;
+            padding: 12px 15px;
+            color: #fff;
             width: 100%;
-            margin-top: 5px;
             outline: none;
+            transition: 0.3s;
         }
 
-        .section-header {
-            background: var(--y2k-cyan);
-            color: var(--y2k-dark);
-            padding: 5px 20px;
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--y2k-pink);
+            box-shadow: 0 0 10px rgba(255, 0, 230, 0.3);
+        }
+
+        .status-badge {
             display: inline-block;
-            border-radius: 0 20px 20px 0;
-            font-weight: bold;
-            margin-left: -40px;
-            margin-bottom: 20px;
-            box-shadow: 5px 5px 0 var(--y2k-pink);
+            padding: 5px 15px;
+            background: var(--y2k-yellow);
+            color: black;
+            font-weight: 900;
+            border-radius: 5px;
+            transform: rotate(-2deg);
+            box-shadow: 4px 4px 0 var(--y2k-pink);
+            font-family: 'Orbitron', sans-serif;
         }
 
-        .y2k-checkbox {
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--y2k-pink);
-            border-radius: 50%;
-            cursor: pointer;
-            position: relative;
-            margin-right: 10px;
-        }
-
-        .y2k-checkbox:checked {
-            background: var(--y2k-pink);
-            box-shadow: 0 0 8px var(--y2k-pink);
-        }
-
-        .marquee {
-            overflow: hidden;
-            white-space: nowrap;
-            background: var(--y2k-pink);
-            color: white;
-            padding: 5px 0;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .marquee-content {
-            display: inline-block;
-            animation: marquee 20s linear infinite;
-        }
-
-        @keyframes marquee {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-100%, 0); }
+        .section-title {
+            color: var(--y2k-pink);
+            border-left: 4px solid var(--y2k-pink);
+            padding-left: 10px;
+            margin: 30px 0 20px 0;
+            font-weight: 900;
+            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
-    <div class="marquee">
-        <div class="marquee-content">
-            GENERATIVE AI WORKSHOP 2026 ★ NEXT GENERATION EFFICIENCY ★ CHIMEI EDUCATION ★ FUTURE IS NOW ★ 
-        </div>
-    </div>
-
     <div class="y2k-container">
-        <header class="mb-10 text-center">
-            <h1 class="chrome-text">GEN-AI DRIVEN</h1>
-            <p class="text-xl mt-2 text-cyan-300 font-bold italic">教育訓練報名表：行政效率翻倍工作坊</p>
-        </header>
+        <div class="flex flex-col md:flex-row justify-between items-start mb-10 gap-4">
+            <header>
+                <h1 class="chrome-text text-4xl font-black">GEN-AI WORKSHOP</h1>
+                <p class="text-cyan-400 font-bold italic">行政效率翻倍工作坊 - 報名系統</p>
+            </header>
+            <div id="quotaInfo" class="status-badge text-sm">
+                QUOTA: LOADING...
+            </div>
+        </div>
 
         <form id="registrationForm">
-            <!-- 01 基本資料 -->
-            <section class="mb-10">
-                <div class="section-header">01 // 基本資料 DATA</div>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block font-bold mb-1 text-cyan-400">姓名 NAME</label>
-                        <input type="text" name="name" placeholder="請輸入您的姓名" required>
-                    </div>
-                    <div>
-                        <label class="block font-bold mb-1 text-cyan-400">電子郵件 EMAIL</label>
-                        <input type="email" name="email" placeholder="example@mail.com" required>
-                    </div>
-                    <div>
-                        <label class="block font-bold mb-1 text-cyan-400">單位 UNIT</label>
-                        <input type="text" name="unit" placeholder="所屬單位名稱">
-                    </div>
-                    <div>
-                        <label class="block font-bold mb-1 text-pink-400">職稱 TITLE (必填)</label>
-                        <div class="grid grid-cols-2 gap-2 mt-2">
-                            <label class="flex items-center"><input type="radio" name="title" value="醫師" class="y2k-checkbox" required> 醫師</label>
-                            <label class="flex items-center"><input type="radio" name="title" value="護理師" class="y2k-checkbox"> 護理師</label>
-                            <label class="flex items-center"><input type="radio" name="title" value="醫事人員" class="y2k-checkbox"> 醫事人員</label>
-                            <label class="flex items-center"><input type="radio" name="title" value="行政人員" class="y2k-checkbox"> 行政人員</label>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <label class="block font-bold mb-1 text-yellow-300">需要茶水點心？</label>
-                        <div class="flex gap-4">
-                            <label class="flex items-center"><input type="radio" name="snack" value="是" class="y2k-checkbox" required> 是</label>
-                            <label class="flex items-center"><input type="radio" name="snack" value="否" class="y2k-checkbox"> 否</label>
-                        </div>
-                    </div>
+            <!-- 第一部分：基本資訊 -->
+            <h2 class="section-title">// 基本資訊 BASIC INFO</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="form-group">
+                    <label>姓名 NAME *</label>
+                    <input type="text" name="name" placeholder="請輸入完整姓名" required>
                 </div>
-            </section>
-
-            <!-- 02 調查 -->
-            <section class="mb-10">
-                <div class="section-header">02 // 數位能力需求 SURVEY</div>
-                <div class="space-y-6">
-                    <div>
-                        <p class="font-bold text-cyan-400 mb-2">Q6. 您目前的 AI 工具使用頻率？</p>
-                        <select name="frequency">
-                            <option value="重度使用者">重度使用者 (每天使用)</option>
-                            <option value="中度使用者">中度使用者 (每週 2-3 次)</option>
-                            <option value="輕度使用者">輕度使用者 (偶爾使用)</option>
-                            <option value="新手">新手 (聽過但沒用過)</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <p class="font-bold text-cyan-400 mb-2">Q7. 您嘗試過哪些 AI 工具？ (可複選)</p>
-                        <div class="grid grid-cols-2 gap-2" id="toolsGroup">
-                            <label class="flex items-center"><input type="checkbox" value="ChatGPT" class="y2k-checkbox"> ChatGPT</label>
-                            <label class="flex items-center"><input type="checkbox" value="Gemini" class="y2k-checkbox"> Gemini</label>
-                            <label class="flex items-center"><input type="checkbox" value="Copilot" class="y2k-checkbox"> Copilot</label>
-                            <label class="flex items-center"><input type="checkbox" value="Midjourney" class="y2k-checkbox"> Midjourney</label>
-                        </div>
-                    </div>
-
-                    <div>
-                        <p class="font-bold text-cyan-400 mb-2">Q8. 應用 AI 的信心指數？ (1-5)</p>
-                        <div class="flex items-center gap-4">
-                            <span class="text-xs">😢 1</span>
-                            <input type="range" name="confidence" min="1" max="5" value="3" class="w-full accent-pink-500">
-                            <span class="text-xs">🚀 5</span>
-                        </div>
-                    </div>
-
-                    <div>
-                        <p class="font-bold text-cyan-400 mb-2">Q9. 希望 AI 解決什麼問題？ (可複選)</p>
-                        <div class="space-y-2" id="painPointsGroup">
-                            <label class="flex items-center"><input type="checkbox" value="文案撰寫" class="y2k-checkbox"> 文案撰寫</label>
-                            <label class="flex items-center"><input type="checkbox" value="會議記錄" class="y2k-checkbox"> 會議記錄</label>
-                            <label class="flex items-center"><input type="checkbox" value="數據處理" class="y2k-checkbox"> 數據處理</label>
-                            <label class="flex items-center"><input type="checkbox" value="簡報製作" class="y2k-checkbox"> 簡報製作</label>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block font-bold mb-2 text-cyan-400">Q10. 您目前遇到的困難或想對講師說的話：</label>
-                        <textarea name="message" rows="3" placeholder="請輸入回饋..."></textarea>
-                    </div>
+                <div class="form-group">
+                    <label>電子郵件 EMAIL *</label>
+                    <input type="email" name="email" placeholder="example@mail.com" required>
                 </div>
-            </section>
+            </div>
 
-            <div class="text-center">
-                <button type="submit" id="submitBtn" class="pill-button text-lg px-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="form-group">
+                    <label>服務單位 UNIT *</label>
+                    <input type="text" name="unit" placeholder="例如：教學部、護理部" required>
+                </div>
+                <div class="form-group">
+                    <label>職稱 TITLE *</label>
+                    <select name="title" required>
+                        <option value="" disabled selected>請選擇職稱</option>
+                        <option value="醫師">醫師</option>
+                        <option value="護理師">護理師</option>
+                        <option value="醫事人員">醫事人員</option>
+                        <option value="行政人員">行政人員</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>活動當天是否需要提供茶水點心？</label>
+                <select name="snack" required>
+                    <option value="是">是 (Yes)</option>
+                    <option value="否">否 (No)</option>
+                </select>
+            </div>
+
+            <!-- 第二部分：AI 經驗調查 -->
+            <h2 class="section-title">// AI 經驗調查 EXPERIENCE SURVEY</h2>
+
+            <div class="form-group">
+                <label>您目前使用生成式 AI (如 ChatGPT) 的頻率？</label>
+                <select name="frequency" required>
+                    <option value="從未使用過">從未使用過</option>
+                    <option value="偶爾使用 (每月幾次)">偶爾使用 (每月幾次)</option>
+                    <option value="經常使用 (每週幾次)">經常使用 (每週幾次)</option>
+                    <option value="每天使用">每天使用</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>您目前已經在使用哪些 AI 工具？ (可多填)</label>
+                <input type="text" name="tools" placeholder="例如：ChatGPT, Gemini, Claude, Midjourney...">
+            </div>
+
+            <div class="form-group">
+                <label>您對目前「與 AI 協作處理行政庶務」的信心指數？ (1-10分)</label>
+                <input type="range" name="confidence" min="1" max="10" value="5" class="accent-cyan-400" oninput="this.nextElementSibling.value = this.value">
+                <output class="block text-center text-yellow-400 font-bold mt-2">5</output>
+            </div>
+
+            <div class="form-group">
+                <label>在日常行政工作中，最讓您感到耗時的「痛點」是什麼？</label>
+                <textarea name="painPoints" rows="3" placeholder="例如：整理會議紀錄、撰寫活動企劃、分析問卷數據..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>對本工作坊的期待或會前補充事項</label>
+                <textarea name="message" rows="2" placeholder="有任何想學習的特定功能或問題嗎？"></textarea>
+            </div>
+
+            <div class="text-center mt-12 mb-6">
+                <button type="submit" id="submitBtn" class="pill-button text-lg w-full md:w-auto px-12">
                     SEND TO FUTURE ⚡ 送出報名
                 </button>
+                <p class="text-xs text-gray-400 mt-4 italic">* 報名成功後將寄發系統確認信至您的電子郵件</p>
             </div>
         </form>
-
-        <footer class="mt-12 text-center text-xs opacity-60">
-            <p>主辦單位：奇美醫院教學部 | 聯絡人：盧英云 (分機57425)</p>
-        </footer>
     </div>
 
     <script>
-        // 更新為您的專屬網址
         const scriptURL = 'https://script.google.com/macros/s/AKfycbz71D5n5covm_0xaVl_FIq4tczK0a9eVipjJOnmLnYKfkhF-jRxjVs8E1MypJv4wPc1/exec';
-
         const form = document.getElementById('registrationForm');
         const btn = document.getElementById('submitBtn');
+        const quotaInfo = document.getElementById('quotaInfo');
+
+        // 1. 初始化檢查名額
+        async function checkQuota() {
+            try {
+                const response = await fetch(`${scriptURL}?action=status`);
+                const data = await response.json();
+                const remaining = data.limit - data.count;
+                
+                quotaInfo.innerText = `QUOTA: ${remaining} LEFT`;
+                
+                if (remaining <= 0) {
+                    btn.disabled = true;
+                    btn.innerText = 'SOLD OUT / 名額已滿';
+                    quotaInfo.style.background = '#ff0000';
+                    quotaInfo.style.color = 'white';
+                    quotaInfo.innerText = `QUOTA: FULL (30/30)`;
+                }
+            } catch (e) {
+                console.error('Quota check failed', e);
+                quotaInfo.innerText = 'QUOTA: OFFLINE';
+            }
+        }
 
         form.addEventListener('submit', e => {
             e.preventDefault();
+            
+            if (!confirm('確認送出報名資料？')) return;
+
             btn.disabled = true;
-            btn.innerText = 'UPLOADING...';
+            btn.innerText = 'PROCESSING... ⚡';
 
-            // 1. 取得基本 FormData
-            const formData = new FormData(form);
-            
-            // 2. 處理複選框 (Q7 & Q9)
-            const tools = Array.from(document.querySelectorAll('#toolsGroup input:checked')).map(el => el.value).join(', ');
-            const painPoints = Array.from(document.querySelectorAll('#painPointsGroup input:checked')).map(el => el.value).join(', ');
-            
-            // 3. 將資料合併到 URL 參數中
-            const finalParams = new URLSearchParams();
-            for (const pair of formData.entries()) {
-                finalParams.append(pair[0], pair[1]);
-            }
-            finalParams.set('tools', tools);
-            finalParams.set('painPoints', painPoints);
+            const formData = new URLSearchParams(new FormData(form)).toString();
 
-            // 4. 發送請求 (使用 JSONP 模式或直接傳送)
-            fetch(`${scriptURL}?${finalParams.toString()}`, {
+            // 使用 POST 發送
+            fetch(scriptURL, {
                 method: 'POST',
-                mode: 'no-cors' // 避免 CORS 預檢問題，Apps Script 的標準作法
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData
             })
             .then(() => {
-                showModal('SUCCESS!', '您的報名資料已傳送至雲端基地。');
+                alert('報名成功！一封通知信已寄到您的電子郵件。請記得檢查垃圾信箱。');
                 form.reset();
-                btn.disabled = false;
-                btn.innerText = 'SEND TO FUTURE ⚡ 送出報名';
+                window.location.reload(); 
             })
             .catch(error => {
                 console.error('Error!', error.message);
-                showModal('ERROR', '通訊障礙，請檢查網路連線。');
+                alert('系統忙碌中或網路錯誤，請稍後再試。');
                 btn.disabled = false;
-                btn.innerText = 'RETRY';
+                btn.innerText = 'SEND TO FUTURE ⚡ 送出報名';
             });
         });
 
-        function showModal(title, text) {
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-                background: var(--y2k-pink); padding: 30px; border: 4px solid white;
-                border-radius: 20px; box-shadow: 0 0 50px var(--y2k-pink); z-index: 1000;
-                text-align: center; color: white; min-width: 300px;
-            `;
-            modal.innerHTML = `
-                <h2 class="text-3xl font-bold mb-2">${title}</h2>
-                <p class="mb-4">${text}</p>
-                <button onclick="this.parentElement.remove()" class="pill-button" style="background:var(--y2k-dark); padding: 8px 20px;">OK</button>
-            `;
-            document.body.appendChild(modal);
-        }
+        // 進入網頁即檢查名額
+        checkQuota();
     </script>
 </body>
 </html>
