@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Y2K AI 儀表板 - 即時數據追蹤</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+TC:wght@300;500;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --y2k-pink: #ff00e6;
+            --y2k-cyan: #00f3ff;
+            --y2k-yellow: #f0ff00;
+            --y2k-dark: #1a1a2e;
+        }
+
+        body {
+            background-color: var(--y2k-dark);
+            background-image: radial-gradient(circle at 50% 50%, #2a2a4e 0%, #1a1a2e 100%);
+            font-family: 'Noto Sans TC', sans-serif;
+            color: white;
+            padding: 20px;
+        }
+
+        .chrome-text {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(180deg, #fff 0%, #aaa 45%, #444 50%, #888 55%, #fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px var(--y2k-cyan));
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 2px solid var(--y2k-cyan);
+            border-radius: 20px;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+            padding: 20px;
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--y2k-yellow);
+            text-shadow: 0 0 10px var(--y2k-yellow);
+        }
+
+        .refresh-btn {
+            background: var(--y2k-pink);
+            border: 2px solid white;
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-weight: bold;
+            box-shadow: 0 0 15px var(--y2k-pink);
+            transition: 0.3s;
+        }
+
+        .refresh-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px var(--y2k-pink);
+        }
+
+        table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
+        th { color: var(--y2k-cyan); text-align: left; padding: 10px; border-bottom: 2px solid var(--y2k-cyan); }
+        td { background: rgba(255,255,255,0.1); padding: 12px 10px; }
+        td:first-child { border-radius: 10px 0 0 10px; }
+        td:last-child { border-radius: 0 10px 10px 0; }
+
+        .loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--y2k-dark); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 1000;
+            transition: 0.5s;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loading" class="loading-overlay">
+        <h2 class="chrome-text text-4xl mb-4">LOADING DATA...</h2>
+        <div class="w-48 h-2 bg-gray-700 rounded-full overflow-hidden">
+            <div class="h-full bg-cyan-400 animate-pulse w-full"></div>
+        </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto">
+        <header class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="chrome-text text-3xl font-black">AI WORKSHOP DASHBOARD</h1>
+                <p class="text-cyan-400 italic">即時報名數據監控系統 v1.0</p>
+            </div>
+            <button onclick="fetchData()" class="refresh-btn">REFRESH ⚡ 刷新數據</button>
+        </header>
+
+        <!-- 頂部數據概覽 -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="glass-card text-center">
+                <p class="text-sm uppercase tracking-widest text-pink-400">總報名人數</p>
+                <div id="totalCount" class="stat-value">0</div>
+            </div>
+            <div class="glass-card text-center">
+                <p class="text-sm uppercase tracking-widest text-cyan-400">平均信心指數</p>
+                <div id="avgConfidence" class="stat-value">0.0</div>
+            </div>
+            <div class="glass-card text-center">
+                <p class="text-sm uppercase tracking-widest text-yellow-400">茶水需求率</p>
+                <div id="snackRate" class="stat-value">0%</div>
+            </div>
+            <div class="glass-card text-center">
+                <p class="text-sm uppercase tracking-widest text-purple-400">行政人員佔比</p>
+                <div id="adminRatio" class="stat-value">0%</div>
+            </div>
+        </div>
+
+        <!-- 圖表區 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="glass-card">
+                <h3 class="font-bold text-cyan-400 mb-4 border-b border-cyan-400/30 pb-2">// 職稱分佈佔比</h3>
+                <canvas id="titleChart" height="200"></canvas>
+            </div>
+            <div class="glass-card">
+                <h3 class="font-bold text-pink-400 mb-4 border-b border-pink-400/30 pb-2">// AI 使用頻率分析</h3>
+                <canvas id="freqChart" height="200"></canvas>
+            </div>
+        </div>
+
+        <!-- 詳細名單 -->
+        <div class="glass-card overflow-x-auto">
+            <h3 class="font-bold text-yellow-400 mb-4 border-b border-yellow-400/30 pb-2">// 最新報名名單</h3>
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th>姓名</th>
+                        <th>單位</th>
+                        <th>職稱</th>
+                        <th>AI 頻率</th>
+                        <th>信心</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- 資料將由 JS 注入 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbz71D5n5covm_0xaVl_FIq4tczK0a9eVipjJOnmLnYKfkhF-jRxjVs8E1MypJv4wPc1/exec';
+        let titleChart, freqChart;
+
+        async function fetchData() {
+            document.getElementById('loading').style.display = 'flex';
+            try {
+                const response = await fetch(scriptURL);
+                const data = await response.json();
+                renderDashboard(data);
+            } catch (error) {
+                console.error('Fetch error:', error);
+                alert('無法讀取數據，請確認 Apps Script 已正確部署為所有人可存取。');
+            } finally {
+                document.getElementById('loading').style.opacity = '0';
+                setTimeout(() => document.getElementById('loading').style.display = 'none', 500);
+            }
+        }
+
+        function renderDashboard(data) {
+            // 1. 基礎數字
+            const total = data.length;
+            document.getElementById('totalCount').innerText = total;
+
+            const sumConf = data.reduce((acc, curr) => acc + parseInt(curr.信心指數 || 0), 0);
+            document.getElementById('avgConfidence').innerText = total ? (sumConf / total).toFixed(1) : "0.0";
+
+            const snackCount = data.filter(d => d.茶水點心 === '是').length;
+            document.getElementById('snackRate').innerText = total ? Math.round((snackCount / total) * 100) + "%" : "0%";
+
+            const adminCount = data.filter(d => d.職稱 === '行政人員').length;
+            document.getElementById('adminRatio').innerText = total ? Math.round((adminCount / total) * 100) + "%" : "0%";
+
+            // 2. 表格
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = data.slice(-10).reverse().map(d => `
+                <tr>
+                    <td>${d.姓名}</td>
+                    <td>${d.單位 || '-'}</td>
+                    <td><span class="text-pink-400">${d.職稱}</span></td>
+                    <td>${d.使用頻率}</td>
+                    <td class="text-yellow-400 font-bold">${d.信心指數}</td>
+                </tr>
+            `).join('');
+
+            // 3. 圖表更新
+            updateCharts(data);
+        }
+
+        function updateCharts(data) {
+            const titles = {};
+            const freqs = {};
+            data.forEach(d => {
+                titles[d.職稱] = (titles[d.職稱] || 0) + 1;
+                freqs[d.使用頻率] = (freqs[d.使用頻率] || 0) + 1;
+            });
+
+            if(titleChart) titleChart.destroy();
+            if(freqChart) freqChart.destroy();
+
+            const chartConfig = (labels, values, color) => ({
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: color,
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    plugins: { legend: { display: false } },
+                    scales: { 
+                        x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#00f3ff' } },
+                        y: { ticks: { color: '#fff' } }
+                    }
+                }
+            });
+
+            titleChart = new Chart(document.getElementById('titleChart'), chartConfig(Object.keys(titles), Object.values(titles), '#ff00e6'));
+            freqChart = new Chart(document.getElementById('freqChart'), chartConfig(Object.keys(freqs), Object.values(freqs), '#00f3ff'));
+        }
+
+        // 初始讀取
+        window.onload = fetchData;
+    </script>
+</body>
+</html>
